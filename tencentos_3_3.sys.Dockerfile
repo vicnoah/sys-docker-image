@@ -7,7 +7,7 @@ RUN case ${TARGETARCH} in \
          "amd64") TAR_URL="https://mirrors.tencent.com/tencentos/3.3/images/docker/x86_64/20260918.1/TencentOS-Server-Container-Base-3.3-20260918.1.x86_64.tar.xz" ;; \
          "arm64") TAR_URL="https://mirrors.tencent.com/tencentos/3.3/images/docker/aarch64/20260918.1/TencentOS-Server-Container-Base-3.3-20260918.1.aarch64.tar.xz" ;; \
     esac && \
-    curl -fsSL "${TAR_URL}" | tar -xf - -C /target
+    curl -fsSL "${TAR_URL}" | xz -d | tar -xf - --wildcards '*/layer.tar' -O | tar -xf - -C /target
 
 COPY tencentos-3.3.repo /target/etc/yum.repos.d/tencentos.repo
 
