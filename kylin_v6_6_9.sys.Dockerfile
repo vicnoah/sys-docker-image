@@ -17,6 +17,12 @@ RUN case ${TARGETARCH} in \
 
 RUN yum --installroot=/target \
     --releasever=6 \
+    --nogpgcheck \
+    --setopt=tsflags=nodocs \
+    install -y kylin-release coreutils rpm yum bash procps tar || \
+    yum --installroot=/target \
+    --releasever=6 \
+    --nogpgcheck \
     --setopt=tsflags=nodocs \
     install -y coreutils rpm yum bash procps tar
 
