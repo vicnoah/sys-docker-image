@@ -21,12 +21,7 @@ RUN yum --installroot=/target \
 
 FROM scratch AS runner
 COPY --from=bootstrap /target /
-RUN yum --releasever=6 \
-    --setopt=tsflags=nodocs \
-    install -y coreutils rpm yum bash procps tar
-RUN yum clean all && \
-    rm -rf /var/cache/yum && \
-    rm -rf /var/log/*
+RUN rm -rf /var/cache/yum /var/log/*
 
 FROM scratch
 COPY --from=runner / /

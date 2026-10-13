@@ -17,16 +17,15 @@ RUN case ${TARGETARCH} in \
 RUN yum --installroot=/target \
     --releasever=10 \
     --setopt=tsflags=nodocs \
-    install -y kylin-release* coreutils rpm yum bash procps tar
+    install -y kylin-release* coreutils rpm yum bash procps-ng tar || \
+    yum --installroot=/target \
+    --releasever=10 \
+    --setopt=tsflags=nodocs \
+    install -y kylin-release* coreutils rpm yum bash tar
 
 FROM scratch AS runner
 COPY --from=bootstrap /target /
-RUN yum --releasever=10 \
-    --setopt=tsflags=nodocs \
-    install -y kylin-release* coreutils rpm yum bash procps tar
-RUN yum clean all && \
-    rm -rf /var/cache/yum && \
-    rm -rf /var/log/*
+RUN rm -rf /var/cache/yum/* /var/log/*
 
 FROM scratch
 COPY --from=runner / /
