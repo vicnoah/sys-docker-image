@@ -17,15 +17,18 @@ RUN case ${TARGETARCH} in \
 
 RUN yum --installroot=/target \
     --releasever=7 \
+    --nogpgcheck \
     --setopt=tsflags=nodocs \
-    --disablerepo=ks7-adv-updates \
-    --disablerepo=ks7-adv-addons \
+    install -y kylin-release coreutils rpm yum bash procps-ng tar || \
+    yum --installroot=/target \
+    --releasever=7 \
+    --nogpgcheck \
+    --setopt=tsflags=nodocs \
     install -y coreutils rpm yum bash procps-ng tar || \
     yum --installroot=/target \
     --releasever=7 \
+    --nogpgcheck \
     --setopt=tsflags=nodocs \
-    --disablerepo=ks7-adv-updates \
-    --disablerepo=ks7-adv-addons \
     install -y coreutils rpm yum bash tar
 
 FROM scratch AS runner
