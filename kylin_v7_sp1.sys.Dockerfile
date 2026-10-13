@@ -19,7 +19,7 @@ RUN yum --installroot=/target \
     --releasever=7 \
     --nogpgcheck \
     --setopt=tsflags=nodocs \
-    install -y kylin-release coreutils rpm yum bash procps-ng tar || \
+    install -y kylin-release setup filesystem coreutils rpm yum bash procps-ng tar || \
     yum --installroot=/target \
     --releasever=7 \
     --nogpgcheck \
