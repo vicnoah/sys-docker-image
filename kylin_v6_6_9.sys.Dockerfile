@@ -3,7 +3,8 @@ FROM openeuler/openeuler:22.03-lts AS bootstrap
 ARG TARGETARCH
 
 RUN echo "I'm building kylin-v6-6.9 for arch ${TARGETARCH}"
-RUN rm -rf /target && mkdir -p /target/etc/yum.repos.d && mkdir -p /etc/pki/rpm-gpg
+RUN rm -rf /etc/yum.repos.d/* /target && mkdir -p /target/etc/yum.repos.d && mkdir -p /etc/pki/rpm-gpg /target/etc/pki/rpm-gpg
+COPY kylin-v6-6.9.repo /etc/yum.repos.d/kylin.repo
 COPY kylin-v6-6.9.repo /target/etc/yum.repos.d/kylin.repo
 COPY RPM-GPG-KEY-kylin /target/etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
 COPY RPM-GPG-KEY-kylin /etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
