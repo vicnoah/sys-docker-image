@@ -9,16 +9,17 @@ COPY kylin-v10-10.0.repo /target/etc/yum.repos.d/kylin.repo
 COPY RPM-GPG-KEY-kylin /target/etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
 COPY RPM-GPG-KEY-kylin /etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
 
+RUN yum --installroot=/target \
+    --releasever=10 \
+    --setopt=sslverify=0 \
+    --setopt=tsflags=nodocs \
+    install -y kylin-release coreutils rpm yum bash procps tar
+
 RUN case ${TARGETARCH} in \
          "amd64")  ARCHNAME=x86_64  ;; \
          "arm64")  ARCHNAME=aarch64  ;; \
     esac && \
     mv /target/etc/yum.repos.d/kylin.repo /target/etc/yum.repos.d/kylin_${ARCHNAME}.repo
-
-RUN yum --installroot=/target \
-    --releasever=10 \
-    --setopt=tsflags=nodocs \
-    install -y kylin-release coreutils rpm yum bash procps tar
 
 FROM scratch AS runner
 COPY --from=bootstrap /target /

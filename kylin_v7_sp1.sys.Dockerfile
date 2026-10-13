@@ -9,27 +9,30 @@ COPY kylin-v7-sp1.repo /target/etc/yum.repos.d/kylin.repo
 COPY RPM-GPG-KEY-kylin /target/etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
 COPY RPM-GPG-KEY-kylin /etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
 
-RUN case ${TARGETARCH} in \
-         "amd64")  ARCHNAME=x86_64  ;; \
-         "arm64")  ARCHNAME=aarch64  ;; \
-    esac && \
-    mv /target/etc/yum.repos.d/kylin.repo /target/etc/yum.repos.d/kylin_${ARCHNAME}.repo
-
 RUN yum --installroot=/target \
     --releasever=7 \
     --nogpgcheck \
+    --setopt=sslverify=0 \
     --setopt=tsflags=nodocs \
     install -y kylin-release setup filesystem coreutils rpm yum bash procps-ng tar || \
     yum --installroot=/target \
     --releasever=7 \
     --nogpgcheck \
+    --setopt=sslverify=0 \
     --setopt=tsflags=nodocs \
     install -y coreutils rpm yum bash procps-ng tar || \
     yum --installroot=/target \
     --releasever=7 \
     --nogpgcheck \
+    --setopt=sslverify=0 \
     --setopt=tsflags=nodocs \
     install -y coreutils rpm yum bash tar
+
+RUN case ${TARGETARCH} in \
+         "amd64")  ARCHNAME=x86_64  ;; \
+         "arm64")  ARCHNAME=aarch64  ;; \
+    esac && \
+    mv /target/etc/yum.repos.d/kylin.repo /target/etc/yum.repos.d/kylin_${ARCHNAME}.repo
 
 FROM scratch AS runner
 COPY --from=bootstrap /target /
