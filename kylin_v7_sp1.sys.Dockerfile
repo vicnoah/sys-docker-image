@@ -3,7 +3,8 @@ FROM openeuler/openeuler:22.03-lts AS bootstrap
 ARG TARGETARCH
 
 RUN echo "I'm building kylin-v7-sp1 for arch ${TARGETARCH}"
-RUN rm -rf /etc/yum.repos.d/* /target && mkdir -p /target/etc/yum.repos.d && mkdir -p /etc/pki/rpm-gpg /target/etc/pki/rpm-gpg
+RUN rm -rf /etc/yum.repos.d/* /target && \
+    mkdir -p /target/etc/yum.repos.d /target/etc/pki/rpm-gpg /target/dev /target/proc /target/sys /etc/pki/rpm-gpg
 COPY kylin-v7-sp1.repo /etc/yum.repos.d/kylin.repo
 COPY kylin-v7-sp1.repo /target/etc/yum.repos.d/kylin.repo
 COPY RPM-GPG-KEY-kylin /target/etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
@@ -19,13 +20,13 @@ RUN yum --installroot=/target \
     --releasever=7 \
     --nogpgcheck \
     --setopt=sslverify=0 \
-    --setopt=tsflags=nodocs \
-    install -y coreutils rpm yum bash procps-ng tar || \
+    --setopt=tsflags=nodocs,noscripts \
+    install -y kylin-release setup filesystem coreutils rpm yum bash procps-ng tar || \
     yum --installroot=/target \
     --releasever=7 \
     --nogpgcheck \
     --setopt=sslverify=0 \
-    --setopt=tsflags=nodocs \
+    --setopt=tsflags=nodocs,noscripts \
     install -y coreutils rpm yum bash tar
 
 RUN case ${TARGETARCH} in \
