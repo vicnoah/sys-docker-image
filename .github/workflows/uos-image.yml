@@ -34,4 +34,4 @@ jobs:
             OS_DIFF=${{ matrix.OS_DIFF }}
           file: ./uos_v20.sys.Dockerfile
           push: true
-          tags: ${{ vars.DOCKER_USERNAME }}/uos:v20-${{ matrix.OS_DIFF }}
+          tags: ${{ vars.DOCKER_ORGANIZATION || vars.DOCKER_ORG || vars.DOCKER_PREFIX || vars.DOCKER_USERNAME }}/uos:v20-${{ matrix.OS_DIFF }}
