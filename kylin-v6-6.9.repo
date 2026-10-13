@@ -4,6 +4,7 @@
 name = Kylin Linux Server 6.9 - Os
 baseurl = https://update.cs2c.com.cn/NS/V6/V6.9/os/lic/base/$basearch/
 gpgcheck = 0
+sslverify = 0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
 enabled = 1
 
@@ -11,5 +12,6 @@ enabled = 1
 name = Kylin Linux Server 6.9 - Updates
 baseurl = https://update.cs2c.com.cn/NS/V6/V6.9/os/lic/updates/$basearch/
 gpgcheck = 0
+sslverify = 0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
 enabled = 1
