@@ -1,10 +1,10 @@
-name: Publish Kylin V10 Docker image
+name: Publish Kylin Docker image
 
 on:
   workflow_dispatch:
     inputs:
       sp_ver:
-        description: 'SP version'
+        description: 'Kylin version'
         required: true
         type: choice
         options:
@@ -13,6 +13,12 @@ on:
           - sp2
           - sp3
           - sp3-2403
+          - sp3.1
+          - 10.0
+          - 10.1
+          - v11-2503
+          - v7-sp1
+          - v6-6.9
       push:
         description: 'Push to Docker Hub'
         type: boolean
@@ -26,9 +32,21 @@ jobs:
       - id: set-matrix
         run: |
           if [[ "${{ inputs.sp_ver }}" == "all" ]]; then
-            echo "matrix=[{\"sp_ver\":\"sp1\"},{\"sp_ver\":\"sp2\"},{\"sp_ver\":\"sp3\"},{\"sp_ver\":\"sp3-2403\"}]" >> $GITHUB_OUTPUT
+            echo 'matrix=[{"ver":"sp1","file":"kylin_v10_sp1.sys.Dockerfile"},{"ver":"sp2","file":"kylin_v10_sp2.sys.Dockerfile"},{"ver":"sp3","file":"kylin_v10_sp3.sys.Dockerfile"},{"ver":"sp3-2403","file":"kylin_v10_sp3_2403.sys.Dockerfile"},{"ver":"sp3.1","file":"kylin_v10_sp3_1.sys.Dockerfile"},{"ver":"10.0","file":"kylin_v10_10_0.sys.Dockerfile"},{"ver":"10.1","file":"kylin_v10_10_1.sys.Dockerfile"},{"ver":"v11-2503","file":"kylin_v11_2503.sys.Dockerfile"},{"ver":"v7-sp1","file":"kylin_v7_sp1.sys.Dockerfile"},{"ver":"v6-6.9","file":"kylin_v6_6_9.sys.Dockerfile"}]' >> $GITHUB_OUTPUT
           else
-            echo "matrix=[{\"sp_ver\":\"${{inputs.sp_ver}}\"}]" >> $GITHUB_OUTPUT
+            case "${{ inputs.sp_ver }}" in
+              sp1) file="kylin_v10_sp1.sys.Dockerfile" ;;
+              sp2) file="kylin_v10_sp2.sys.Dockerfile" ;;
+              sp3) file="kylin_v10_sp3.sys.Dockerfile" ;;
+              sp3-2403) file="kylin_v10_sp3_2403.sys.Dockerfile" ;;
+              sp3.1) file="kylin_v10_sp3_1.sys.Dockerfile" ;;
+              10.0) file="kylin_v10_10_0.sys.Dockerfile" ;;
+              10.1) file="kylin_v10_10_1.sys.Dockerfile" ;;
+              v11-2503) file="kylin_v11_2503.sys.Dockerfile" ;;
+              v7-sp1) file="kylin_v7_sp1.sys.Dockerfile" ;;
+              v6-6.9) file="kylin_v6_6_9.sys.Dockerfile" ;;
+            esac
+            echo "matrix=[{\"ver\":\"${{inputs.sp_ver}}\",\"file\":\"${file}\"}]" >> $GITHUB_OUTPUT
           fi
   build:
     needs: [setup]
@@ -55,10 +73,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          platforms: linux/amd64,linux/arm64
+          platforms: ${{ (matrix.ver == 'v6-6.9') && 'linux/amd64' || 'linux/amd64,linux/arm64' }}
           context: .
-          build-args: |
-            SP_VERSION=${{ matrix.sp_ver }}
-          file: ./kylin_v10.sys.Dockerfile
+          file: ./${{ matrix.file }}
           push: ${{ inputs.push }}
-          tags: ${{ vars.DOCKER_USERNAME }}/kylin:v10-${{ matrix.sp_ver }}
+          tags: ${{ vars.DOCKER_USERNAME }}/kylin:${{ matrix.ver }}
