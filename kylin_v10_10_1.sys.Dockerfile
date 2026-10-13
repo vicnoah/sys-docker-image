@@ -17,18 +17,16 @@ RUN case ${TARGETARCH} in \
 RUN yum --installroot=/target \
     --releasever=10 \
     --setopt=tsflags=nodocs \
-    install -y kylin-release coreutils rpm yum bash procps tar
+    install -y kylin-release* coreutils rpm yum bash procps tar
 
 FROM scratch AS runner
 COPY --from=bootstrap /target /
 RUN yum --releasever=10 \
     --setopt=tsflags=nodocs \
-    install -y kylin-release coreutils rpm yum bash procps tar
+    install -y kylin-release* coreutils rpm yum bash procps tar
 RUN yum clean all && \
     rm -rf /var/cache/yum && \
     rm -rf /var/log/*
-RUN cp /usr/lib/locale/locale-archive /usr/lib/locale/locale-archive.tmpl && \
-    build-locale-archive --install-langs="en:zh"
 
 FROM scratch
 COPY --from=runner / /
