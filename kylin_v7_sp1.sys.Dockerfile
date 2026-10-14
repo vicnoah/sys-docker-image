@@ -4,7 +4,7 @@ ARG TARGETARCH
 
 RUN echo "I'm building kylin-v7-sp1 for arch ${TARGETARCH}"
 RUN rm -rf /etc/yum.repos.d/* /target && \
-    mkdir -p /target/etc/yum.repos.d /target/etc/pki/rpm-gpg /target/dev /target/proc /target/sys /etc/pki/rpm-gpg
+    mkdir -p /target/etc/yum.repos.d /target/etc/pki/rpm-gpg /etc/pki/rpm-gpg
 COPY kylin-v7-sp1.repo /etc/yum.repos.d/kylin.repo
 COPY kylin-v7-sp1.repo /target/etc/yum.repos.d/kylin.repo
 COPY RPM-GPG-KEY-kylin /target/etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
@@ -15,13 +15,7 @@ RUN yum --installroot=/target \
     --nogpgcheck \
     --setopt=sslverify=0 \
     --setopt=tsflags=nodocs \
-    install -y coreutils rpm dnf bash procps-ng tar || \
-    yum --installroot=/target \
-    --releasever=7 \
-    --nogpgcheck \
-    --setopt=sslverify=0 \
-    --setopt=tsflags=nodocs \
-    install -y coreutils rpm bash tar
+    install -y coreutils rpm yum bash procps-ng tar
 
 RUN case ${TARGETARCH} in \
          "amd64")  ARCHNAME=x86_64  ;; \
