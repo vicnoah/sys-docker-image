@@ -15,7 +15,7 @@ RUN yum --installroot=/target \
     --nogpgcheck \
     --setopt=sslverify=0 \
     --setopt=tsflags=nodocs \
-    install -y coreutils rpm yum bash procps-ng tar
+    install -y neokylin-release* coreutils rpm yum bash procps-ng tar
 
 RUN case ${TARGETARCH} in \
          "amd64")  ARCHNAME=x86_64  ;; \
