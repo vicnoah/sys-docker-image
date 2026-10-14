@@ -1,0 +1,27 @@
+###Kylin Linux Server 7 SP1 - os repo###
+
+[ks7-adv-os]
+name = Kylin Linux Server 7 SP1 - Os
+baseurl = https://update.cs2c.com.cn/NS/V7/V7SP1/os/adv/lic/base/$basearch/
+gpgcheck = 0
+sslverify = 0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
+enabled = 1
+
+[ks7-adv-updates]
+name = Kylin Linux Server 7 SP1 - Updates
+baseurl = https://update.cs2c.com.cn/NS/V7/V7SP1/os/adv/lic/updates/$basearch/
+gpgcheck = 0
+sslverify = 0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
+enabled = 0
+skip_if_unavailable = 1
+
+[ks7-adv-addons]
+name = Kylin Linux Server 7 SP1 - Addons
+baseurl = https://update.cs2c.com.cn/NS/V7/V7SP1/os/adv/lic/addons/$basearch/
+gpgcheck = 0
+sslverify = 0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
+enabled = 0
+skip_if_unavailable = 1

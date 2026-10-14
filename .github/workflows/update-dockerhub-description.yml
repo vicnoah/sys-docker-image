@@ -17,7 +17,7 @@ jobs:
           username: ${{ vars.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           readme-filepath: kylin_v10.README.md
-          repository: ${{ vars.DOCKER_USERNAME }}/kylin
+          repository: ${{ vars.DOCKER_ORGANIZATION || vars.DOCKER_ORG || vars.DOCKER_PREFIX || vars.DOCKER_USERNAME }}/kylin
 
       - name: Update uos repo description
         uses: peter-evans/dockerhub-description@v4
@@ -25,4 +25,12 @@ jobs:
           username: ${{ vars.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           readme-filepath: uos_v20.README.md
-          repository: ${{ vars.DOCKER_USERNAME }}/uos
+          repository: ${{ vars.DOCKER_ORGANIZATION || vars.DOCKER_ORG || vars.DOCKER_PREFIX || vars.DOCKER_USERNAME }}/uos
+
+      - name: Update tencentos repo description
+        uses: peter-evans/dockerhub-description@v4
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          readme-filepath: tencentos.README.md
+          repository: ${{ vars.DOCKER_ORGANIZATION || vars.DOCKER_ORG || vars.DOCKER_PREFIX || vars.DOCKER_USERNAME }}/tencentos

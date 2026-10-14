@@ -1,0 +1,11 @@
+[BaseOS]
+name=TencentOS Server 4.0 - BaseOS
+baseurl=https://mirrors.tencent.com/tencentos/4.0/BaseOS/$basearch/os/
+enabled=1
+gpgcheck=0
+
+[AppStream]
+name=TencentOS Server 4.0 - AppStream
+baseurl=https://mirrors.tencent.com/tencentos/4.0/AppStream/$basearch/os/
+enabled=1
+gpgcheck=0

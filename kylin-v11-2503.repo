@@ -1,0 +1,25 @@
+###Kylin Linux Server 11 2503 - os repo###
+
+[ks11-adv-os]
+name = Kylin Linux Server 11 2503 - Os
+baseurl = https://update.cs2c.com.cn/NS/V11/2503/os/adv/lic/base/$basearch/
+gpgcheck = 1
+sslverify = 0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
+enabled = 1
+
+[ks11-adv-updates]
+name = Kylin Linux Server 11 2503 - Updates
+baseurl = https://update.cs2c.com.cn/NS/V11/2503/os/adv/lic/updates/$basearch/
+gpgcheck = 1
+sslverify = 0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
+enabled = 1
+
+[ks11-adv-addons]
+name = Kylin Linux Server 11 2503 - Addons
+baseurl = https://update.cs2c.com.cn/NS/V11/2503/os/adv/lic/addons/$basearch/
+gpgcheck = 1
+sslverify = 0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
+enabled = 0

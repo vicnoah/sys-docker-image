@@ -4,6 +4,7 @@
 name = Kylin Linux Advanced Server 10 - Os 
 baseurl = https://update.cs2c.com.cn/NS/V10/V10SP2/os/adv/lic/base/$basearch/
 gpgcheck = 1
+sslverify = 0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
 enabled = 1
 
@@ -11,6 +12,7 @@ enabled = 1
 name = Kylin Linux Advanced Server 10 - Updates
 baseurl = https://update.cs2c.com.cn/NS/V10/V10SP2/os/adv/lic/updates/$basearch/
 gpgcheck = 1
+sslverify = 0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
 enabled = 1
 
@@ -18,5 +20,6 @@ enabled = 1
 name = Kylin Linux Advanced Server 10 - Addons
 baseurl = https://update.cs2c.com.cn/NS/V10/V10SP2/os/adv/lic/addons/$basearch/
 gpgcheck = 1
+sslverify = 0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
 enabled = 0
