@@ -3,7 +3,8 @@ FROM openeuler/openeuler:22.03-lts AS bootstrap
 ARG TARGETARCH
 
 RUN echo "I'm building kylin-v6-6.9 for arch ${TARGETARCH}"
-RUN rm -rf /etc/yum.repos.d/* /target && mkdir -p /target/etc/yum.repos.d && mkdir -p /etc/pki/rpm-gpg /target/etc/pki/rpm-gpg
+RUN rm -rf /etc/yum.repos.d/* /target && \
+    mkdir -p /target/etc/yum.repos.d /target/etc/pki/rpm-gpg /etc/pki/rpm-gpg
 COPY kylin-v6-6.9.repo /etc/yum.repos.d/kylin.repo
 COPY kylin-v6-6.9.repo /target/etc/yum.repos.d/kylin.repo
 COPY RPM-GPG-KEY-kylin /target/etc/pki/rpm-gpg/RPM-GPG-KEY-kylin
@@ -14,7 +15,7 @@ RUN yum --installroot=/target \
     --nogpgcheck \
     --setopt=sslverify=0 \
     --setopt=tsflags=nodocs \
-    install -y coreutils rpm yum bash procps tar
+    install -y neokylin-release* coreutils rpm yum bash procps tar
 
 RUN case ${TARGETARCH} in \
          "amd64")  ARCHNAME=x86_64  ;; \
