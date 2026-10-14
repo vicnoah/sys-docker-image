@@ -15,19 +15,13 @@ RUN yum --installroot=/target \
     --nogpgcheck \
     --setopt=sslverify=0 \
     --setopt=tsflags=nodocs \
-    install -y kylin-release setup filesystem coreutils rpm yum bash procps-ng tar || \
+    install -y coreutils rpm dnf bash procps-ng tar || \
     yum --installroot=/target \
     --releasever=7 \
     --nogpgcheck \
     --setopt=sslverify=0 \
-    --setopt=tsflags=nodocs,noscripts \
-    install -y kylin-release setup filesystem coreutils rpm yum bash procps-ng tar || \
-    yum --installroot=/target \
-    --releasever=7 \
-    --nogpgcheck \
-    --setopt=sslverify=0 \
-    --setopt=tsflags=nodocs,noscripts \
-    install -y coreutils rpm yum bash tar
+    --setopt=tsflags=nodocs \
+    install -y coreutils rpm bash tar
 
 RUN case ${TARGETARCH} in \
          "amd64")  ARCHNAME=x86_64  ;; \
